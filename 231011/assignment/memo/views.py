@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from .models import Post
 from django.db.models import Q
+from .models import Post
 
 def memo(request):
     if request.GET.get('q'):
@@ -22,6 +23,7 @@ def post(request, pk):
     return render(request, 'memo/post.html', context)
 
 def delete(request, pk):
-    p = Post.objects.get(pk=pk)
-    p.delete()
+    d = Post.objects.get(pk=pk)
+    d.main_image.delete()
+    d.delete()
     return redirect('memo')

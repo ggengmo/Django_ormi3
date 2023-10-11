@@ -1,13 +1,34 @@
-<!-- templates > memo > memo.html -->
-<h1><h1><a href="{% url 'memo' %}" style="text-decoration: none; color: black;" >MEMO 목록</a></h1></h1>
-<form action="" method="get">
-    <input name="q" type="search">
-    <button type="submit">검색</button>
-</form>
-<ul>
-    {% for post_detail in db %}
-    <li>
-        <a href="{% url 'post' post_detail.id %}">제목: {{ post_detail.title }}, 작성일 :{{ post_detail.updated_at}}</a>
-    </li>
-    {% endfor %}
-</ul>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('{% static 'assets/img/home-bg.jpg' %}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Clean Blog</h1>
+                            <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <!-- Post preview-->
+                    <ul>
+                        {% for post_detail in db %}
+                        <li>
+                            <a href="{% url 'post' post_detail.id %}">제목: {{ post_detail.title }}, 작성일 :{{ post_detail.updated_at}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                </div>
+            </div>
+        </div>
+{% endblock %}
