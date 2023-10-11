@@ -1,0 +1,13 @@
+<!-- templates > memo > memo.html -->
+<h1><h1><a href="{% url 'memo' %}" style="text-decoration: none; color: black;" >MEMO 목록</a></h1></h1>
+<form action="" method="get">
+    <input name="q" type="search">
+    <button type="submit">검색</button>
+</form>
+<ul>
+    {% for post_detail in db %}
+    <li>
+        <a href="{% url 'post' post_detail.id %}">제목: {{ post_detail.title }}, 작성일 :{{ post_detail.updated_at}}</a>
+    </li>
+    {% endfor %}
+</ul>
