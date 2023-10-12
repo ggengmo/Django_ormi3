@@ -2,9 +2,9 @@
 <ul>
     {% for post_detail in db %}
     <li>
-        <a href="{% url 'post' post_detail.id %}">{{ post_detail.title }}</a>
+        <a href="{% url 'notice_post' post_detail.id %}">{{ post_detail.title }}</a>
         <p>{{post_detail.contents}}</p>
-        img
+        <img src="{{ db.main_image.url }}" alt="">
     </li>
     {% endfor %}
 </ul>

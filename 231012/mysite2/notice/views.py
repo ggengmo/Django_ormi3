@@ -10,7 +10,7 @@ def notice(requset):
     }
     return render(requset, 'notice/notice.html', context)
 
-def post(request, pk):
+def notice_post(request, pk):
     db = Post.objects.get(pk=pk)
     context = {
         'db': db,
