@@ -1,0 +1,11 @@
+<h1>비밀 게시판입니다.</h1>
+<ul>
+    {% for post_detail in db %}
+    <li>
+        <a href="{% url 'post' post_detail.id %}">{{ post_detail.title }}</a>
+        <p>{{post_detail.contents}}</p>
+        img
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'blog' %}">블로그 보기</a>

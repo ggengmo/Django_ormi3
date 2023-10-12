@@ -1,0 +1,21 @@
+<h1>게시판</h1>
+<form action="" method="get">
+    <input name="q" type="search">
+    <button type="submit">검색</button>
+</form>
+<ul>
+    {% for post_detail in db %}
+    <li>
+        <a href="{% url 'post' post_detail.id %}">{{ post_detail.title }}</a>
+        <p>{{post_detail.contents}}</p>
+        <img src="{{ post_detail.main_image.url }}" style='width: 150px;'  alt="">
+    </li>
+    {% endfor %}
+</ul>
+{% if request.user.is_authenticated %}
+<a href="{% url 'logout' %}">로그아웃</a>
+<a href="{% url 'notice' %}">비밀게시판 보기</a>
+{% else %}
+<a href="{% url 'login' %}">로그인</a>
+<a href="{% url 'signup' %}">회원가입</a>
+{% endif %}
