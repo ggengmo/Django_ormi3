@@ -1,0 +1,22 @@
+<h1>{{ post.title }}</h1>
+<p>{{ post.content }}</p>
+<p>{{ post.author }}</p>
+{% if post.file_upload %}
+    <video width="320" height="240" controls>
+        <source src="{{ post.file_upload.url }}" type="video/mp4">
+    </video>
+{% endif %}
+
+{% for comment in post.comments.all %}
+    <p>{{ comment.message }}</p>
+{% endfor %}
+{% for tag in post.tags.all %}
+    <a href="/tube/tag/{{ tag.name }}">#{{ tag.name }}</a>
+{% endfor %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+<a href="{% url 'tubelist' %}">목록으로 가기</a>
