@@ -105,7 +105,7 @@
         <script>
             // query string중 page값을 받아오는 함수
             let pagenum = window.location.href.split('?')[1].split('=')[1]
-            fetch(`http://127.0.0.1:8000/blog/${pagenum}`)
+            fetch(`https://firstcontainer-zvdkj.run.goorm.site/blog/${pagenum}`)
             .then(response => response.json())
             .then(data => {
                 console.log(data)
