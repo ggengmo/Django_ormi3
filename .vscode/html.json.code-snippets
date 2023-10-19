@@ -1,0 +1,22 @@
+{
+	"html": {
+		"prefix": "!!",
+		"body": [
+		"<!DOCTYPE html>",
+		"<html lang=\"ko-KR\">",
+		"<head>",
+		"<meta charset=\"UTF-8\">",
+		"<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+
+		"    <title>$1</title>",
+"\t",	
+		"</head>",
+"\t",
+		"<body>$2",
+"\t",
+		"</body>",
+"\t",
+		"</html>",
+		],
+		"description": "한국어 HTML"}
+}
