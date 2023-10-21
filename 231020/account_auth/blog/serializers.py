@@ -14,7 +14,6 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
-
 class RegisterSerializer(serializers.ModelSerializer):
     '''
     회원 가입 시리얼라이저
@@ -58,7 +57,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         # print(token)
         return user
     
-
 class LoginSerializer(serializers.ModelSerializer):
     '''
     로그인 시리얼라이저
@@ -79,4 +77,3 @@ class LoginSerializer(serializers.ModelSerializer):
             token = Token.objects.get(user=user)
             return token
         raise serializers.ValidationError("유효하지 않은 로그인입니다.")
-    
