@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-x4xusdrqwpx#8b&0b0zg67t!2uer(3st*%2-#mxk^c-$)fthna
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'blog',
-    'markdown_deux',
+    "blog",
+    "markdown_deux",
 ]
 
 MIDDLEWARE = [
@@ -124,5 +124,5 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"

@@ -8,19 +8,18 @@ from django.views.generic import CreateView
 
 
 signup = CreateView.as_view(
-    form_class = UserCreationForm,
-    template_name = 'accounts/form.html',
-    success_url = '/accounts/login/'
+    form_class=UserCreationForm,
+    template_name="accounts/form.html",
+    success_url="/accounts/login/",
 )
 
 login = LoginView.as_view(
-    template_name = 'accounts/form.html',
+    template_name="accounts/form.html",
 )
 
-logout = LogoutView.as_view(
-    next_page = '/accounts/login/'
-)
+logout = LogoutView.as_view(next_page="/accounts/login/")
+
 
 @login_required
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    return render(request, "accounts/profile.html")
