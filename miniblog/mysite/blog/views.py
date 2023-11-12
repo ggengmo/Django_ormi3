@@ -1,5 +1,3 @@
-# blog > views.py
-
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -80,7 +78,8 @@ def tag_page(request, slug):
 
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
+    fields = ['title', 'content', 'head_image',
+              'file_upload', 'category']
 
     def form_valid(self, form):
         current_user = self.request.user
@@ -109,7 +108,8 @@ class PostCreate(LoginRequiredMixin, CreateView):
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'content', 'head_image', 'file_upload', 'category', 'tags']
+    fields = ['title', 'content', 'head_image',
+              'file_upload', 'category', 'tags']
 
     def form_valid(self, form):
         current_user = self.request.user
@@ -181,6 +181,7 @@ def delete_comment(request, pk):
 
 
 postlist = PostList.as_view()
+postdetail = PostDetail.as_view()
 write = PostCreate.as_view()
 edit = PostUpdate.as_view()
 delete = DeleteView.as_view()

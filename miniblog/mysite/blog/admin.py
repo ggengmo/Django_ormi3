@@ -1,20 +1,15 @@
-# blog > admin.py
-
 from django.contrib import admin
-from .models import Post, Category, Tag, Comment
-
+from .models import Post, Comment, Category, Tag
 
 class CategoryAdmin(admin.ModelAdmin):
-    # 자동으로 채워지게 하는 필드
     prepopulated_fields = {'slug': ('name',)}
-
 
 class TagAdmin(admin.ModelAdmin):
-    # 자동으로 채워지게 하는 필드
     prepopulated_fields = {'slug': ('name',)}
 
-
+# Register your models here.
 admin.site.register(Post)
+admin.site.register(Comment)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)
-admin.site.register(Comment)
+
