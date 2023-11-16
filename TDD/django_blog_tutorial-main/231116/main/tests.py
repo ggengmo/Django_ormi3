@@ -24,12 +24,12 @@ class TestView(TestCase):
         navbar = soup.find('nav')
         self.assertEqual(soup.title.text, 'Clean Blog - Start Bootstrap Theme')
         
-        navbar_links = navbar.find_all('a')  # navbar 내의 모든 링크를 찾는 코드
-        link_texts = [link.text.strip() for link in navbar_links]  # 각 링크의 텍스트를 가져와 리스트로 만듦
-        self.assertIn('Start Bootstrap', link_texts)  # 수정된 부분
-        self.assertIn('About', link_texts)  # 수정된 부분
-        self.assertIn('Contact', link_texts)  # 수정된 부분
-        self.assertIn('Blog', link_texts)  # 수정된 부분
+        navbar_links = navbar.find_all('a')
+        link_texts = [link.text.strip() for link in navbar_links]
+        self.assertIn('Start Bootstrap', link_texts)
+        self.assertIn('About', link_texts)
+        self.assertIn('Contact', link_texts)
+        self.assertIn('Blog', link_texts)
         
         footer = soup.footer
         self.assertIn('상속 test용 푸터', footer.text)
@@ -57,12 +57,12 @@ class TestView(TestCase):
         self.assertIn(post_001.content, main_area.text)
         self.assertIn('2023년 11월 16일', main_area.text)
             
-        navbar_links = navbar.find_all('a')  # navbar 내의 모든 링크를 찾는 코드
-        link_texts = [link.text.strip() for link in navbar_links]  # 각 링크의 텍스트를 가져와 리스트로 만듦
-        self.assertIn('Start Bootstrap', link_texts)  # 수정된 부분
-        self.assertIn('About', link_texts)  # 수정된 부분
-        self.assertIn('Contact', link_texts)  # 수정된 부분
-        self.assertIn('Blog', link_texts)  # 수정된 부분
+        navbar_links = navbar.find_all('a')
+        link_texts = [link.text.strip() for link in navbar_links]
+        self.assertIn('Start Bootstrap', link_texts)
+        self.assertIn('About', link_texts)
+        self.assertIn('Contact', link_texts)
+        self.assertIn('Blog', link_texts)
         
         footer = soup.footer
         self.assertIn('상속 test용 푸터', footer.text)
