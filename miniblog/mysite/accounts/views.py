@@ -8,9 +8,9 @@ from django.conf import settings
 
 signup = CreateView.as_view(
     form_class = UserCreationForm,
-    #기본 URL을 변경
+
     template_name = 'accounts/form.html',
-    #로그인 성공했을 때 보낼 URL
+
     success_url = settings.LOGIN_URL,
 )
 
