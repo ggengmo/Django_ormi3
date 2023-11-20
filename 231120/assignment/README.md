@@ -1,21 +1,26 @@
 # 1. 프로젝트 설정
-## 폴더 생성 및 이동
+- 폴더 생성 및 이동
+```
 mkdir assignment
 
 cd assignment
-
-## 가상환경 및 Django 설치
+```
+- 가상환경 및 Django 설치
+```
 python -m venv venv
 
 pip install django
-
-## 프로젝트 및 앱 생성
+```
+- 프로젝트 및 앱 생성
+```
 django-admin startproject project .
 
 python manage.py startapp blog
 python manage.py startapp notice
+```
 
-## project > settings.py
+```
+# project > settings.py
 INSTALLED_APPS = [
     '''
     생략
@@ -45,8 +50,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+```
 
-## project > urls.py
+```python
+# project > urls.py
 from django.contrib import admin
 from django.urls import path, include
 
@@ -56,12 +63,11 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('notice/', include('notice.urls')),
 ]
-
-
+```
 # 2. Blog app
-## Blog 모델 생성
-### blog > models.py
-
+- Blog 모델 생성
+```python
+# blog > models.py
 from django.db import models
 from django.conf import settings
 
@@ -71,11 +77,15 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+```
 
-## DB 적용
+- DB 적용
+```
 python manage.py makemigrations
 python manage.py migrate
+```
 
+```python
 ## blog > serializers.py
 from rest_framework.serializers import ModelSerializer
 from .models import Post
@@ -84,7 +94,9 @@ class PostSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+```
 
+```python
 ## blog > views.py
 from rest_framework.viewsets import ModelViewSet
 from .models import Post
@@ -93,7 +105,9 @@ from .serializers import PostSerializer
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+```
 
+```python
 ## blog > urls.py
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
@@ -105,15 +119,18 @@ router.register('', views.PostViewSet)
 urlpatterns = [
     path('', include(router.urls)),
 ]
+```
 
-## 슈퍼유저 생성
-### python manage.py createsuperuser
+- 슈퍼유저 생성
+```
+python manage.py createsuperuser
 사용자 이름 (leave blank to use 'rudah'): rudah
 이메일 주소: rudah365dlf@gmail.com
 Password: 
 Password (again):
+```
 
-## 테스트
+- 테스트
 [
     {
         "id": 1,
@@ -143,9 +160,9 @@ Password (again):
 
 9개 작성
 
-## 인증 구현
-## blog > permissions.py
-
+- 인증 구현
+```python
+# blog > permissions.py
 from rest_framework import permissions
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
@@ -159,9 +176,10 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return obj.author == request.user
+```
 
-
-## blog > views.py
+```python
+# blog > views.py
 from rest_framework.viewsets import ModelViewSet
 from .models import Post
 from .serializers import PostSerializer
@@ -172,6 +190,7 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthorOrReadOnly, IsAuthenticated]
+```
 
 /blog: 회원인 사람만 R, C 가능
 /blog/int:post_pk: 회원인 사람만 R, 작성자만 UD 가능
@@ -179,8 +198,9 @@ class PostViewSet(ModelViewSet):
 기능 테스트
 
 # 3. Notice App
-## Notice 모델 생성
-### notice > models.py
+- Notice 모델 생성
+```python
+# notice > models.py
 from django.db import models
 from django.conf import settings
 
@@ -190,8 +210,10 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+```
 
-## DB 적용
+- DB 적용
+```
 python manage.py makemigrations
 SystemCheckError: System check identified some issues:
 
@@ -200,10 +222,11 @@ blog.Post.author: (fields.E304) Reverse accessor 'User.post_set' for 'blog.Post.
         HINT: Add or change a related_name argument to the definition for 'blog.Post.author' or 'notice.Post.author'.
 notice.Post.author: (fields.E304) Reverse accessor 'User.post_set' for 'notice.Post.author' clashes with reverse accessor for 'blog.Post.author'.
         HINT: Add or change a related_name argument to the definition for 'notice.Post.author' or 'blog.Post.author'.
+```
 
-## 에러 발생하여 blog, notice modle 수정
-### notice > models.py
-
+- 에러 발생하여 blog, notice modle 수정
+```python
+# notice > models.py
 from django.db import models
 from django.conf import settings
 
@@ -213,8 +236,10 @@ class Post(models.Model):
     '''
     생략
     '''
-# blog > models.py
+```
 
+```python
+# blog > models.py
 from django.db import models
 from django.conf import settings
 
@@ -225,9 +250,14 @@ class Post(models.Model):
     생략
     '''
 
+```
+
+```
 python manage.py makemigrations
 python manage.py migrate
+```
 
+```python
 # notice > serializers.py
 from rest_framework.serializers import ModelSerializer
 from .models import Post
@@ -236,16 +266,18 @@ class PostSerializer(ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+```
 
-## 테스트
+- 테스트
 blog와 같이 글 9개 작성 후 
 /notice: 회원이 아닌 사람도 R 가능, 회원인 사람만 C 가능
 /notice/int:post_pk: 회원이 아닌 사람도 R 가능, 작성자만 UD 가능
 
 기능 테스트
 
-## 인증 구현
-# notice > permissions.py
+- 인증 구현
+```python
+#notice > permissions.py
 from rest_framework import permissions
 
 class IsAuthorOrReadOnly(permissions.BasePermission):
@@ -259,7 +291,9 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return obj.author == request.user
-        
+```
+
+```python
 # notice > views.py
 from rest_framework.viewsets import ModelViewSet
 from .models import Post
@@ -271,3 +305,4 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [IsAuthorOrReadOnly]
+```
