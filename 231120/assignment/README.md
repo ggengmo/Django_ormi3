@@ -130,7 +130,7 @@ Password:
 Password (again):
 ```
 
-- 테스트
+- 글 작성
 ```
 [
     {
@@ -178,26 +178,10 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         return obj.author == request.user
-```
+``인
+- /blog: 회원인 사람만 R, C 가능
+- /blog/int:post_pk: 회원인 사람만 R, 작성자만 UD 가능
 
-```python
-# blog > views.py
-from rest_framework.viewsets import ModelViewSet
-from .models import Post
-from .serializers import PostSerializer
-from rest_framework.permissions import IsAuthenticated
-from .permissions import IsAuthorOrReadOnly
-
-class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = [IsAuthorOrReadOnly, IsAuthenticated]
-```
-
-/blog: 회원인 사람만 R, C 가능
-/blog/int:post_pk: 회원인 사람만 R, 작성자만 UD 가능
-
-기능 테스트
 
 # 3. Notice App
 - Notice 모델 생성
@@ -226,7 +210,8 @@ notice.Post.author: (fields.E304) Reverse accessor 'User.post_set' for 'notice.P
         HINT: Add or change a related_name argument to the definition for 'notice.Post.author' or 'blog.Post.author'.
 ```
 
-- 에러 발생하여 blog, notice modle 수정
+- 이름 충돌로 인한 에러 발생하여 blog, notice modle 수정
+- author에 ```related_name``` 추가
 ```python
 # notice > models.py
 from django.db import models
@@ -270,13 +255,6 @@ class PostSerializer(ModelSerializer):
         fields = '__all__'
 ```
 
-- 테스트
-blog와 같이 글 9개 작성 후 
-/notice: 회원이 아닌 사람도 R 가능, 회원인 사람만 C 가능
-/notice/int:post_pk: 회원이 아닌 사람도 R 가능, 작성자만 UD 가능
-
-기능 테스트
-
 - 인증 구현
 ```python
 #notice > permissions.py
@@ -308,3 +286,7 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsAuthorOrReadOnly]
 ```
+## 테스트
+- blog처럼 글 9개 작성후 기능 확인
+- /notice: 회원이 아닌 사람도 R 가능, 회원인 사람만 C 가능
+- /notice/int:post_pk: 회원이 아닌 사람도 R 가능, 작성자만 UD 가능
